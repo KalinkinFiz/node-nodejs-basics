@@ -3,6 +3,7 @@ import fs from "fs/promises";
 const rename = async () => {
   try {
     const files = await fs.readdir("./src/fs/files");
+
     if (
       !files.includes("wrongFilename.txt") ||
       files.includes("properFilename.md")
