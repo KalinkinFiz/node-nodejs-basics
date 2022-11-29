@@ -1,12 +1,16 @@
 import fs from "fs/promises";
+import path from "path";
+import * as url from "url";
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 const list = async () => {
   try {
-    const files = await fs.readdir("./src/fs");
+    const files = await fs.readdir(__dirname);
 
     if (!files.includes("files")) throw new Error("FS operation failed");
 
-    const file = await fs.readdir("./src/fs/files");
+    const file = await fs.readdir(path.join(__dirname, "files"));
 
     console.log("Data stored in folder:\n");
     for (const list of file) console.log(list);

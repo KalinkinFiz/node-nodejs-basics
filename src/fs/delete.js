@@ -1,13 +1,17 @@
 import fs from "fs/promises";
+import path from "path";
+import * as url from "url";
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 const remove = async () => {
   try {
-    const files = await fs.readdir("./src/fs/files");
+    const files = await fs.readdir(path.join(__dirname, "files"));
 
     if (!files.includes("fileToRemove.txt"))
       throw new Error("FS operation failed");
 
-    await fs.rm("./src/fs/files/fileToRemove.txt", {
+    await fs.rm(path.join(__dirname, "files", "fileToRemove.txt"), {
       force: true,
     });
     console.log("Files deleted");

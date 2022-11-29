@@ -1,14 +1,19 @@
 import fs from "fs/promises";
+import path from "path";
+import * as url from "url";
 
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const CONTENT = "I am fresh and young";
 
 const create = async () => {
   try {
-    const files = await fs.readdir("./src/fs/files");
+    const files = await fs.readdir(path.join(__dirname, "files"));
 
     if (files.includes("fresh.txt")) throw new Error("FS operation failed");
 
-    await fs.writeFile("./src/fs/files/fresh.txt", CONTENT, { flag: "wx" });
+    await fs.writeFile(path.join(__dirname, "files", "fresh.txt"), CONTENT, {
+      flag: "wx",
+    });
     console.log(
       "The file has been successfully created, the information has been entered"
     );
