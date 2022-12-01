@@ -1,21 +1,24 @@
 const parseArgs = () => {
   const args = process.argv.slice(2);
-  const props = [];
-  const values = [];
-  const out = [];
 
-  for (let item of args) {
-    if (item.includes("--")) {
-      props.push(item.slice(2));
-    } else {
-      values.push(item);
+  return args.reduce((previusValue, currentValue, currentIndex, array) => {
+    if (currentValue.startsWith("--")) {
+      const field = currentValue.slice(2);
+      const value = array[currentIndex + 1] ?? null;
+
+      if (!value || value.startsWith("--")) {
+        return [...previusValue, { field, value: null }];
+      }
+
+      return [...previusValue, { field, value }];
     }
-  }
 
-  for (let i = 0; i < props.length; i++) {
-    output.push(`${props[i]} is ${values[i]}`);
-  }
-  console.log(out.join(", "));
+    return previusValue;
+  }, []);
 };
 
-parseArgs();
+const args = parseArgs();
+
+const output = [];
+args.forEach(({ field, value }) => output.push(`${field} is ${value}`));
+console.log(output.join(", "));
