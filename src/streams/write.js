@@ -15,9 +15,9 @@ class MyWritable extends Writable {
     encoding: "utf-8",
   });
 
-  _write(chunk, _encoding, callback) {
+  _write(chunk, _enc, next) {
     this.input.write(chunk);
-    callback;
+    next();
   }
 }
 
