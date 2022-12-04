@@ -5,13 +5,14 @@ import { Writable } from "stream";
 import path from "path";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const fileToWrite = path.join(__dirname, "files", "fileToWrite.txt");
 
 class MyWritable extends Writable {
   constructor(opr) {
     super(opr);
   }
 
-  input = createWriteStream(path.join(__dirname, "files", "fileToWrite.txt"), {
+  input = createWriteStream(fileToWrite, {
     encoding: "utf-8",
   });
 
@@ -23,6 +24,7 @@ class MyWritable extends Writable {
 
 const write = async () => {
   const writableStream = new MyWritable();
+
   stdin.pipe(writableStream);
 };
 

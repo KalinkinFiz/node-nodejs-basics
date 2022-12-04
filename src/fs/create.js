@@ -3,6 +3,8 @@ import path from "path";
 import * as url from "url";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+const filePath = path.join(__dirname, "files", "fresh.txt");
+
 const CONTENT = "I am fresh and young";
 
 const create = async () => {
@@ -11,9 +13,10 @@ const create = async () => {
 
     if (files.includes("fresh.txt")) throw new Error("FS operation failed");
 
-    await fs.writeFile(path.join(__dirname, "files", "fresh.txt"), CONTENT, {
+    await fs.writeFile(filePath, CONTENT, {
       flag: "wx",
     });
+
     console.log(
       "The file has been successfully created, the information has been entered"
     );

@@ -3,6 +3,7 @@ import path from "path";
 import * as url from "url";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+const folder = path.join(__dirname, "files");
 
 const list = async () => {
   try {
@@ -10,7 +11,7 @@ const list = async () => {
 
     if (!files.includes("files")) throw new Error("FS operation failed");
 
-    const file = await fs.readdir(path.join(__dirname, "files"));
+    const file = await fs.readdir(folder);
 
     console.log("Data stored in folder:\n");
     for (const list of file) console.log(list);

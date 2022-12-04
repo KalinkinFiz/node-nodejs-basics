@@ -4,6 +4,7 @@ import { cpus } from "os";
 import path from "path";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const workerFiles = path.join(__dirname, "worker.js");
 
 const performCalculations = async () => {
   const promises = [];
@@ -11,7 +12,7 @@ const performCalculations = async () => {
   for (let i = 0; i < cpus().length; i++) {
     promises.push(
       new Promise((resolve, _reject) => {
-        const worker = new Worker(path.join(__dirname, "worker.js"), {
+        const worker = new Worker(workerFiles, {
           workerData: 10 + i,
         });
 

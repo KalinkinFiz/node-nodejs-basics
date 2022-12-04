@@ -23,11 +23,11 @@ class MyTransform extends Transform {
 
 const transform = async () => {
   const transformStream = new MyTransform();
-  const ReadableStream = process.stdin;
-  const WriteableStream = process.stdout;
+  const readableStream = process.stdin;
+  const writeableStream = process.stdout;
 
   try {
-    await pipelineAsync(ReadableStream, transformStream, WriteableStream);
+    await pipelineAsync(readableStream, transformStream, writeableStream);
   } catch (e) {
     process.stderr.write(e.message);
     process.exit(1);

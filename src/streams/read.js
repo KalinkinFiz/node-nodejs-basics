@@ -5,6 +5,7 @@ import { Readable } from "stream";
 import path from "path";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const fileToRead = path.join(__dirname, "files", "fileToRead.txt");
 
 class MyReadable extends Readable {
   constructor(opr) {
@@ -12,9 +13,7 @@ class MyReadable extends Readable {
   }
 
   _read() {
-    const input = createReadStream(
-      path.join(__dirname, "files", "fileToRead.txt")
-    );
+    const input = createReadStream(fileToRead);
 
     input.on("data", (chunk) => {
       stdout._write(chunk);
