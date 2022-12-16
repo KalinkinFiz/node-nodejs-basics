@@ -1,5 +1,28 @@
+import { Worker } from "worker_threads";
+import { fileURLToPath } from "url";
+import { cpus } from "os";
+import path from "path";
+
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const workerFiles = path.join(__dirname, "worker.js");
+
 const performCalculations = async () => {
-    // Write your code here
+  const promises = [];
+
+  for (let i = 0; i < cpus().length; i++) {
+    promises.push(
+      new Promise((resolve, _reject) => {
+        const worker = new Worker(workerFiles, {
+          workerData: 10 + i,
+        });
+
+        worker.on("message", (data) => resolve({ status: "resolved", data }));
+        worker.on("error", () => resolve({ status: "error", data: null }));
+      })
+    );
+  }
+
+  Promise.all(promises).then((result) => console.log(result));
 };
 
 await performCalculations();
